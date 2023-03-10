@@ -3,6 +3,13 @@ function Sidebar({formatDate, sidebar, notes, onAddNote, activeNote, setActiveNo
 
     const sortedNotes = notes.sort((a,b) => b.lastModified - a.lastModified);
 
+    const noteBodyPreview = (text) => {
+        if (text.length >= 80){
+            return (text.substr(0,80) + "...");
+        }
+        return (text.substr(0,(text.length - 4)) + "...");
+    }
+
     return (
     <div className={sidebar? "app-sidebar": "app-sidebar-closed"}>
         <div className="app-sidebar-header">
@@ -22,7 +29,7 @@ function Sidebar({formatDate, sidebar, notes, onAddNote, activeNote, setActiveNo
                 <small className="note-meta">
                     Last modified {formatDate(note.lastModified)}
                 </small>
-                <div className="sidebar-note-body" dangerouslySetInnerHTML={{__html: note.body && (note.body.substr(0,80) + "...")}}/>
+                <div className="sidebar-note-body" dangerouslySetInnerHTML={{__html: note.body && noteBodyPreview(note.body)}}/>
             </div>
             </Link>
             ))}    
